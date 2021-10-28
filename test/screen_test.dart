@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
+import 'package:flutter_screen/flutter_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:screen/screen.dart';
 
 void main() {
   const MethodChannel channel = MethodChannel('np.com.rohanshrestha/screen');
@@ -9,7 +9,9 @@ void main() {
 
   setUp(() {
     channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      return '42';
+      if (methodCall.method == "getBrightness") {
+        return 0.5;
+      }
     });
   });
 
@@ -17,7 +19,7 @@ void main() {
     channel.setMockMethodCallHandler(null);
   });
 
-  test('getPlatformVersion', () async {
-    //expect(await Screen.platformVersion, '42');
+  test('getBrightness', () async {
+    expect(await FlutterScreen.getBrightness(), 0.5);
   });
 }

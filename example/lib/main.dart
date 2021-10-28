@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:screen/screen.dart';
+import 'package:flutter_screen/flutter_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void dispose() {
     super.dispose();
-    Screen.enableWakeLock(false);
+    FlutterScreen.enableWakeLock(false);
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      brightness = await Screen.getBrightness() ?? 0.0;
+      brightness = await FlutterScreen.getBrightness() ?? 0.0;
     } on PlatformException {
       print("Exception thrown");
     }
@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
       _brightness = brightness;
     });
 
-    Screen.enableWakeLock(true);
+    FlutterScreen.enableWakeLock(true);
   }
 
   @override

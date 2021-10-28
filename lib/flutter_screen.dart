@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 
-class Screen {
+class FlutterScreen {
   static const MethodChannel _channel =
       MethodChannel('np.com.rohanshrestha/screen');
 

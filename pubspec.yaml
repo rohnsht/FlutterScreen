@@ -1,5 +1,5 @@
-name: screen
-description: A new flutter plugin project.
+name: flutter_screen
+description: A flutter plugin to adjust screen brightness and wakelock.
 version: 0.0.1
 publish_to: none
 homepage:
