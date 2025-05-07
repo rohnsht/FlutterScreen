@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -38,7 +39,7 @@ class _MyAppState extends State<MyApp> {
     try {
       brightness = await FlutterScreen.getBrightness() ?? 0.0;
     } on PlatformException {
-      print("Exception thrown");
+      if (kDebugMode) print("Exception thrown");
     }
 
     // If the widget was removed from the tree while the asynchronous platform
