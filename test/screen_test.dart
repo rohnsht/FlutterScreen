@@ -3,20 +3,27 @@ import 'package:flutter_screen/flutter_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  const MethodChannel channel = MethodChannel('np.com.rohanshrestha/screen');
-
   TestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() {
-    channel.setMethodCallHandler((MethodCall methodCall) async {
-      if (methodCall.method == "getBrightness") {
-        return 0.5;
-      }
-    });
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(
+      const MethodChannel('np.com.rohanshrestha/screen'),
+      (MethodCall methodCall) async {
+        if (methodCall.method == "getBrightness") {
+          return 0.5;
+        }
+        return null;
+      },
+    );
   });
 
   tearDown(() {
-    channel.setMethodCallHandler(null);
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(
+      const MethodChannel('np.com.rohanshrestha/screen'),
+      null,
+    );
   });
 
   test('getBrightness', () async {
