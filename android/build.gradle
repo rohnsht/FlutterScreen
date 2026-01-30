@@ -2,14 +2,14 @@ group 'np.com.rohanshrestha.screen'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.9.0'
+    ext.kotlin_version = '2.1.21'
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.11.0'
+        classpath 'com.android.tools.build:gradle:8.13.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -32,17 +32,13 @@ android {
         targetCompatibility JavaVersion.VERSION_21
     }
 
-    kotlinOptions {
-        jvmTarget = '21'
-    }
-
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
+    compileSdkVersion 36
     defaultConfig {
-        compileSdk 36
-        minSdk 21
+        minSdkVersion 24
     }
 }
 

@@ -3,7 +3,6 @@ package np.com.rohanshrestha.screen
 import android.app.Activity
 import android.provider.Settings
 import android.view.WindowManager
-import androidx.annotation.NonNull
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -22,7 +21,7 @@ class ScreenPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var channel: MethodChannel
     private var activity: Activity? = null
 
-    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "np.com.rohanshrestha/screen")
         channel.setMethodCallHandler(this)
     }
@@ -31,7 +30,7 @@ class ScreenPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         activity = binding.activity
     }
 
-    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+    override fun onMethodCall(call: MethodCall, result: Result) {
         when (call.method) {
             "getBrightness" -> getScreenBrightness(result)
             "setBrightness" -> {
@@ -45,7 +44,7 @@ class ScreenPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
     }
 
-    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
     }
 
@@ -62,7 +61,7 @@ class ScreenPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
 
-    private fun getScreenBrightness(result: MethodChannel.Result) {
+    private fun getScreenBrightness(result: Result) {
         if (activity == null)
             throw NoActivityException()
 
@@ -81,7 +80,7 @@ class ScreenPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         result.success(brightness)
     }
 
-    private fun setScreenBrightness(brightness: Double, result: MethodChannel.Result) {
+    private fun setScreenBrightness(brightness: Double, result: Result) {
         if (activity == null)
             throw NoActivityException()
 
@@ -91,7 +90,7 @@ class ScreenPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         result.success(null)
     }
 
-    private fun enableWakeLock(isAwake: Boolean, result: MethodChannel.Result) {
+    private fun enableWakeLock(isAwake: Boolean, result: Result) {
         if (activity == null)
             throw NoActivityException()
 
