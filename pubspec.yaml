@@ -1,6 +1,6 @@
 name: flutter_screen
 description: A flutter plugin to adjust screen brightness and wakelock.
-version: 1.0.0
+version: 1.0.1
 publish_to: none
 homepage:
 
