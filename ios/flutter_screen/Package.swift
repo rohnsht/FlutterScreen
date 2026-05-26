@@ -18,6 +18,12 @@ let package = Package(
             name: "flutter_screen",
             dependencies: [
                 .product(name: "FlutterFramework", package: "FlutterFramework")
+            ],
+            resources: [
+                // If this plugin requires a privacy manifest (e.g. it uses
+                // required reason APIs), update PrivacyInfo.xcprivacy and
+                // uncomment the following line:
+                // .process("PrivacyInfo.xcprivacy"),
             ]
         )
     ]
