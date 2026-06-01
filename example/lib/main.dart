@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_screen/flutter_screen.dart';
@@ -18,6 +17,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   double _brightness = 0.0;
+  double _sliderBrightness = 0.0;
 
   @override
   void initState() {
@@ -49,9 +49,36 @@ class _MyAppState extends State<MyApp> {
 
     setState(() {
       _brightness = brightness;
+      _sliderBrightness = brightness;
     });
 
     FlutterScreen.enableWakeLock(true);
+  }
+
+  Future<void> _setBrightness() async {
+    try {
+      await FlutterScreen.setBrightness(_sliderBrightness);
+      if (!mounted) return;
+      setState(() {
+        _brightness = _sliderBrightness;
+      });
+    } on PlatformException {
+      if (kDebugMode) print('Failed to set brightness');
+    }
+  }
+
+  Future<void> _resetBrightness() async {
+    try {
+      await FlutterScreen.resetBrightness();
+      final double brightness = await FlutterScreen.getBrightness() ?? 0.0;
+      if (!mounted) return;
+      setState(() {
+        _brightness = brightness;
+        _sliderBrightness = brightness;
+      });
+    } on PlatformException {
+      if (kDebugMode) print('Failed to reset brightness');
+    }
   }
 
   @override
@@ -62,7 +89,37 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_brightness'),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('Current brightness: ${_brightness.toStringAsFixed(2)}'),
+                const SizedBox(height: 16),
+                Slider(
+                  min: 0.0,
+                  max: 1.0,
+                  value: _sliderBrightness,
+                  onChanged: (double value) {
+                    setState(() {
+                      _sliderBrightness = value;
+                    });
+                  },
+                ),
+                Text('Selected: ${_sliderBrightness.toStringAsFixed(2)}'),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: _setBrightness,
+                  child: const Text('Set Brightness'),
+                ),
+                const SizedBox(height: 8),
+                OutlinedButton(
+                  onPressed: _resetBrightness,
+                  child: const Text('Reset Brightness'),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
