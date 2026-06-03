@@ -70,7 +70,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> _resetBrightness() async {
     try {
       await FlutterScreen.resetBrightness();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 500));
       final double brightness = await FlutterScreen.getBrightness() ?? 0.0;
       if (!mounted) return;
       setState(() {
